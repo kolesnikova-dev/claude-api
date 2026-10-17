@@ -1,5 +1,4 @@
 ﻿#:package Anthropic@12.58.0
-#:package DotEnv@0.0.1.1
 #:package DotNetEnv@3.1.1
 #:property JsonSerializerIsReflectionEnabledByDefault=true
 
@@ -24,7 +23,7 @@ try
           MaxTokens = 1000,
           Messages = [new() {
               Role = Role.User,
-              Content = "Hello, Claude"
+              Content = "What is your programming language of preference?"
           }]
       });
 
