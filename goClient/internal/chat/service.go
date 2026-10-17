@@ -83,6 +83,26 @@ func New(m Messenger, opts ...Option) *Service {
 	return s
 }
 
+// AddUserMessage appends a user message, e.g. to seed history.
+func (s *Service) AddUserMessage(text string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.inflight {
+		return ErrBusy
+	}
+	return s.addUserLocked(text)
+}
+
+// AddAssistantMessage appends an assistant message, e.g. to seed history.
+func (s *Service) AddAssistantMessage(text string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.inflight {
+		return ErrBusy
+	}
+	return s.addAssistantLocked(text)
+}
+
 func (s *Service) ChatStream(ctx context.Context, text string, onDelta func(string)) (string, error) {
 	s.mu.Lock()
 	if s.inflight {
