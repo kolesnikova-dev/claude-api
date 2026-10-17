@@ -1,1 +1,1 @@
-This repository is to try out Claude API in different languages. 
+This repository is to try out Claude API in different languages with focus on Go.
