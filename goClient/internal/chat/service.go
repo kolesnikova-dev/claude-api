@@ -17,11 +17,12 @@ const defaultMaxTokens = 1024
 // It is safe for concurrent use, but a conversation is inherently serial:
 // while a Chat call is in flight, other calls return ErrBusy.
 type Service struct {
-	messenger  Messenger
-	model      anthropic.Model
-	maxTokens  int64
-	system     string
-	maxHistory int // in user/assistant turns; 0 means unbounded
+	messenger   Messenger
+	model       anthropic.Model
+	maxTokens   int64
+	system      string
+	maxHistory  int // in user/assistant turns; 0 means unbounded
+	temperature float64
 
 	mu       sync.Mutex
 	history  []anthropic.MessageParam
@@ -50,6 +51,11 @@ func WithMaxTokens(n int64) Option {
 }
 
 // WithSystemPrompt sets the system prompt.
+func WithTemperature(t float64) Option {
+	return func(s *Service) { s.temperature = t }
+}
+
+// WithSystemPrompt sets the system prompt.
 func WithSystemPrompt(p string) Option {
 	return func(s *Service) { s.system = p }
 }
@@ -68,7 +74,7 @@ func WithMaxHistory(n int) Option {
 func New(m Messenger, opts ...Option) *Service {
 	s := &Service{
 		messenger: m,
-		model:     anthropic.ModelClaudeSonnet5_5,
+		model:     anthropic.ModelClaudeSonnet4_6,
 		maxTokens: defaultMaxTokens,
 	}
 	for _, opt := range opts {
@@ -77,25 +83,54 @@ func New(m Messenger, opts ...Option) *Service {
 	return s
 }
 
-// AddUserMessage appends a user message, e.g. to seed history.
-// func (s *Service) AddUserMessage(text string) error {
-// 	s.mu.Lock()
-// 	defer s.mu.Unlock()
-// 	if s.inflight {
-// 		return ErrBusy
-// 	}
-// 	return s.addUserLocked(text)
-// }
+func (s *Service) ChatStream(ctx context.Context, text string, onDelta func(string)) (string, error) {
+	s.mu.Lock()
+	if s.inflight {
+		s.mu.Unlock()
+		return "", ErrBusy
+	}
+	before := len(s.history)
+	if err := s.addUserLocked(text); err != nil {
+		s.mu.Unlock()
+		return "", err
+	}
+	s.inflight = true
+	snapshot := append([]anthropic.MessageParam(nil), s.history...)
+	s.mu.Unlock()
 
-// AddAssistantMessage appends an assistant message, e.g. to seed history.
-// func (s *Service) AddAssistantMessage(text string) error {
-// 	s.mu.Lock()
-// 	defer s.mu.Unlock()
-// 	if s.inflight {
-// 		return ErrBusy
-// 	}
-// 	return s.addAssistantLocked(text)
-// }
+	params := s.buildParams(snapshot)
+
+	stream := s.messenger.NewStreaming(ctx, params)
+	var sb strings.Builder
+	for stream.Next() {
+		if ev, ok := stream.Current().AsAny().(anthropic.ContentBlockDeltaEvent); ok {
+			if td, ok := ev.Delta.AsAny().(anthropic.TextDelta); ok {
+				sb.WriteString(td.Text)
+				onDelta(td.Text) // caller prints it
+			}
+		}
+	}
+	err := stream.Err()
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.inflight = false
+
+	if err != nil {
+		s.history = s.history[:before]
+		return "", fmt.Errorf("chat: stream: %w", err)
+	}
+	reply := sb.String()
+	if strings.TrimSpace(sb.String()) == "" {
+		s.history = s.history[:before]
+		return "", ErrNoTextContent
+	}
+
+	// addAssistantLocked cannot fail: reply is non-empty and the last message is the user's.
+	_ = s.addAssistantLocked(reply)
+	s.trimLocked()
+	return reply, nil
+}
 
 // Chat appends text as a user message, sends the conversation to the model,
 // appends the reply as an assistant message and returns its text.
@@ -130,6 +165,22 @@ func (s *Service) Chat(ctx context.Context, text string) (string, error) {
 	return reply, nil
 }
 
+func (s *Service) buildParams(msgs []anthropic.MessageParam) anthropic.MessageNewParams {
+	params := anthropic.MessageNewParams{
+		Model:     s.model,
+		MaxTokens: s.maxTokens,
+		Messages:  msgs,
+	}
+	if s.system != "" {
+		params.System = []anthropic.TextBlockParam{{Text: s.system}}
+	}
+
+	if s.temperature != 0 {
+		params.Temperature = anthropic.Float(s.temperature)
+	}
+	return params
+}
+
 func (s *Service) send(ctx context.Context, msgs []anthropic.MessageParam) (string, error) {
 	params := anthropic.MessageNewParams{
 		Model:     s.model,
@@ -138,6 +189,10 @@ func (s *Service) send(ctx context.Context, msgs []anthropic.MessageParam) (stri
 	}
 	if s.system != "" {
 		params.System = []anthropic.TextBlockParam{{Text: s.system}}
+	}
+
+	if s.temperature != 0 {
+		params.Temperature = anthropic.Float(s.temperature)
 	}
 
 	msg, err := s.messenger.New(ctx, params)
