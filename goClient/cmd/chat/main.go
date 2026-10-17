@@ -1,11 +1,14 @@
 package main
 
 import (
+	"bufio"
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 
 	"github.com/anthropics/anthropic-sdk-go"
 	"github.com/joho/godotenv"
@@ -32,10 +35,30 @@ func run() error {
 	client := anthropic.NewClient()
 	svc := chat.New(&client.Messages, chat.WithMaxTokens(1000))
 
-	reply, err := svc.Chat(ctx, "Hello, Claude")
-	if err != nil {
-		return err
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("Chat with Claude. Type 'exit' or press Ctrl+D to quit.")
+
+	for {
+		fmt.Print("you> ")
+		if !scanner.Scan() {
+			return scanner.Err() // nil on EOF (Ctrl+D / Ctrl+Z on Windows)
+		}
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" {
+			continue
+		}
+		if line == "exit" {
+			return nil
+		}
+
+		reply, err := svc.Chat(ctx, line)
+		if err != nil {
+			if errors.Is(err, context.Canceled) {
+				return nil
+			}
+			fmt.Fprintln(os.Stderr, "error:", err)
+			continue // history is rolled back on failure, so you can retry
+		}
+		fmt.Println("claude>", reply)
 	}
-	fmt.Println(reply)
-	return nil
 }

@@ -78,24 +78,24 @@ func New(m Messenger, opts ...Option) *Service {
 }
 
 // AddUserMessage appends a user message, e.g. to seed history.
-func (s *Service) AddUserMessage(text string) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if s.inflight {
-		return ErrBusy
-	}
-	return s.addUserLocked(text)
-}
+// func (s *Service) AddUserMessage(text string) error {
+// 	s.mu.Lock()
+// 	defer s.mu.Unlock()
+// 	if s.inflight {
+// 		return ErrBusy
+// 	}
+// 	return s.addUserLocked(text)
+// }
 
 // AddAssistantMessage appends an assistant message, e.g. to seed history.
-func (s *Service) AddAssistantMessage(text string) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if s.inflight {
-		return ErrBusy
-	}
-	return s.addAssistantLocked(text)
-}
+// func (s *Service) AddAssistantMessage(text string) error {
+// 	s.mu.Lock()
+// 	defer s.mu.Unlock()
+// 	if s.inflight {
+// 		return ErrBusy
+// 	}
+// 	return s.addAssistantLocked(text)
+// }
 
 // Chat appends text as a user message, sends the conversation to the model,
 // appends the reply as an assistant message and returns its text.
