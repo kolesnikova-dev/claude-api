@@ -64,10 +64,10 @@ func run() error {
 	defer stop()
 
 	system := "You are patient and understanding of a developer trying to build with you. The dev configured a continuous message loop."
-	temp := 0.9
+	// temp := 0.9
 	// client := anthropic.NewClient(option.WithMiddleware(logRequest))
 	client := anthropic.NewClient()
-	svc := chat.New(&client.Messages, chat.WithMaxTokens(1000), chat.WithSystemPrompt(system), chat.WithTemperature(temp))
+	svc := chat.New(&client.Messages, chat.WithMaxTokens(1000), chat.WithSystemPrompt(system))
 
 	scanner := bufio.NewScanner(os.Stdin)
 	printBanner()
@@ -84,9 +84,9 @@ func run() error {
 		if line == "exit" {
 			return nil
 		}
-		// fmt.Println("Booping...")
-		fmt.Println("claude> ")
-		_, err := svc.ChatStream(ctx, line, func(delta string) { fmt.Print(delta) })
+		fmt.Println("Booping...")
+
+		reply, err := svc.Chat(ctx, line)
 		if err != nil {
 			if errors.Is(err, context.Canceled) {
 				return nil
@@ -94,6 +94,7 @@ func run() error {
 			fmt.Fprintln(os.Stderr, "error:", err)
 			continue // history is rolled back on failure, so you can retry
 		}
-		fmt.Println()
+		fmt.Println("claude> ", reply)
+
 	}
 }

@@ -74,7 +74,7 @@ func WithMaxHistory(n int) Option {
 func New(m Messenger, opts ...Option) *Service {
 	s := &Service{
 		messenger: m,
-		model:     anthropic.ModelClaudeSonnet4_6,
+		model:     anthropic.ModelClaudeHaiku4_5,
 		maxTokens: defaultMaxTokens,
 	}
 	for _, opt := range opts {
