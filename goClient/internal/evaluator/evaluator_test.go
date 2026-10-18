@@ -15,14 +15,14 @@ import (
 	"github.com/anthropics/anthropic-sdk-go/option"
 )
 
-// fakeCompleter answers by calling fn and records every request.
-type fakeCompleter struct {
+// fakeGrader answers by calling fn and records every request.
+type fakeGrader struct {
 	mu   sync.Mutex
 	reqs []Request
 	fn   func(Request) (string, error)
 }
 
-func (f *fakeCompleter) Complete(_ context.Context, req Request) (string, error) {
+func (f *fakeGrader) Grade(_ context.Context, req Request) (string, error) {
 	f.mu.Lock()
 	f.reqs = append(f.reqs, req)
 	f.mu.Unlock()
@@ -99,7 +99,7 @@ func TestGradePrompt(t *testing.T) {
 }
 
 func TestGenerateUniqueIdeas(t *testing.T) {
-	f := &fakeCompleter{fn: func(Request) (string, error) { return `["a", "b"]`, nil }}
+	f := &fakeGrader{fn: func(Request) (string, error) { return `["a", "b"]`, nil }}
 	got, err := New(f).GenerateUniqueIdeas(context.Background(), "task", 2)
 	if err != nil {
 		t.Fatal(err)
@@ -114,7 +114,7 @@ func TestGenerateUniqueIdeas(t *testing.T) {
 }
 
 func TestGenerateTestCase(t *testing.T) {
-	f := &fakeCompleter{fn: func(Request) (string, error) {
+	f := &fakeGrader{fn: func(Request) (string, error) {
 		return `{"prompt_inputs": {"x": "1"}, "solution_criteria": ["c"]}`, nil
 	}}
 	tc, err := New(f).GenerateTestCase(context.Background(), "task", "idea", map[string]string{"x": "desc"})
@@ -130,7 +130,7 @@ func TestGenerateTestCase(t *testing.T) {
 }
 
 func TestGenerateDatasetSkipsFailures(t *testing.T) {
-	f := &fakeCompleter{fn: func(r Request) (string, error) {
+	f := &fakeGrader{fn: func(r Request) (string, error) {
 		switch {
 		case r.System == ideasSystemPrompt:
 			return `["good", "bad", "good2"]`, nil
@@ -191,7 +191,7 @@ func writeDataset(t *testing.T, n int) string {
 }
 
 func TestRunEvaluation(t *testing.T) {
-	f := &fakeCompleter{fn: func(Request) (string, error) { return gradeJSON(8), nil }}
+	f := &fakeGrader{fn: func(Request) (string, error) { return gradeJSON(8), nil }}
 	var out bytes.Buffer
 	ev := New(f, WithOutput(&out))
 	dir := t.TempDir()
@@ -234,7 +234,7 @@ func TestRunEvaluation(t *testing.T) {
 }
 
 func TestRunEvaluationAbortsOnError(t *testing.T) {
-	f := &fakeCompleter{fn: func(Request) (string, error) { return gradeJSON(8), nil }}
+	f := &fakeGrader{fn: func(Request) (string, error) { return gradeJSON(8), nil }}
 	ev := New(f, WithMaxConcurrency(1), WithOutput(&bytes.Buffer{}))
 	boom := errors.New("boom")
 	calls := 0
@@ -256,7 +256,7 @@ func TestRunEvaluationAbortsOnError(t *testing.T) {
 }
 
 func TestGradeOutputMissingScore(t *testing.T) {
-	f := &fakeCompleter{fn: func(Request) (string, error) { return `{"reasoning": "x"}`, nil }}
+	f := &fakeGrader{fn: func(Request) (string, error) { return `{"reasoning": "x"}`, nil }}
 	_, _, err := New(f).GradeOutput(context.Background(), TestCase{}, "o", "")
 	if !errors.Is(err, ErrNoScore) {
 		t.Errorf("err = %v", err)
@@ -264,7 +264,7 @@ func TestGradeOutputMissingScore(t *testing.T) {
 }
 
 func TestRunEvaluationEmptyDataset(t *testing.T) {
-	ev := New(&fakeCompleter{fn: func(Request) (string, error) { return "", nil }}, WithOutput(&bytes.Buffer{}))
+	ev := New(&fakeGrader{fn: func(Request) (string, error) { return "", nil }}, WithOutput(&bytes.Buffer{}))
 	dir := t.TempDir()
 	file := filepath.Join(dir, "d.json")
 	if err := os.WriteFile(file, []byte("[]"), 0o644); err != nil {
@@ -302,11 +302,11 @@ func (m *fakeMessenger) New(_ context.Context, p anthropic.MessageNewParams, _ .
 	return &msg, nil
 }
 
-func TestAnthropicCompleter(t *testing.T) {
+func TestAnthropicGrader(t *testing.T) {
 	fm := &fakeMessenger{resp: "[]"}
-	c := NewAnthropicCompleter(fm, "")
+	c := NewAnthropicGrader(fm, "")
 
-	got, err := c.Complete(context.Background(), Request{
+	got, err := c.Grade(context.Background(), Request{
 		System:        "sys",
 		Prompt:        "hello",
 		Prefill:       "```json",
@@ -331,7 +331,7 @@ func TestAnthropicCompleter(t *testing.T) {
 		t.Errorf("system/stop = %+v / %v", p.System, p.StopSequences)
 	}
 
-	if _, err := c.Complete(context.Background(), Request{Prompt: "x"}); err != nil {
+	if _, err := c.Grade(context.Background(), Request{Prompt: "x"}); err != nil {
 		t.Fatal(err)
 	}
 	if len(fm.params.Messages) != 1 || len(fm.params.System) != 0 {

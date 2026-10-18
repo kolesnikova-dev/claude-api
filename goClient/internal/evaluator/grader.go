@@ -28,34 +28,34 @@ type Request struct {
 	StopSequences []string
 }
 
-// Completer performs one-shot model calls.
-type Completer interface {
-	Complete(ctx context.Context, req Request) (string, error)
+// Grader performs one-shot model calls.
+type Grader interface {
+	Grade(ctx context.Context, req Request) (string, error)
 }
 
-// messenger is the subset of the Anthropic SDK used by AnthropicCompleter.
+// messenger is the subset of the Anthropic SDK used by AnthropicGrader.
 // *anthropic.MessageService satisfies it.
 type messenger interface {
 	New(ctx context.Context, params anthropic.MessageNewParams, opts ...option.RequestOption) (*anthropic.Message, error)
 }
 
-// AnthropicCompleter is a Completer backed by the Anthropic Messages API.
-type AnthropicCompleter struct {
+// AnthropicGrader is a Grader backed by the Anthropic Messages API.
+type AnthropicGrader struct {
 	m     messenger
 	model anthropic.Model
 }
 
-// NewAnthropicCompleter returns a Completer that calls m. An empty model
+// NewAnthropicGrader returns a Grader that calls m. An empty model
 // selects Claude Haiku 4.5.
-func NewAnthropicCompleter(m messenger, model anthropic.Model) *AnthropicCompleter {
+func NewAnthropicGrader(m messenger, model anthropic.Model) *AnthropicGrader {
 	if model == "" {
 		model = anthropic.ModelClaudeHaiku4_5
 	}
-	return &AnthropicCompleter{m: m, model: model}
+	return &AnthropicGrader{m: m, model: model}
 }
 
-// Complete sends req and returns the text of the first content block.
-func (c *AnthropicCompleter) Complete(ctx context.Context, req Request) (string, error) {
+// Grade sends req and returns the text of the first content block.
+func (c *AnthropicGrader) Grade(ctx context.Context, req Request) (string, error) {
 	msgs := []anthropic.MessageParam{
 		anthropic.NewUserMessage(anthropic.NewTextBlock(req.Prompt)),
 	}

@@ -35,9 +35,9 @@ const (
 // ErrNoScore is returned when the grader's JSON has no "score" field.
 var ErrNoScore = errors.New("evaluator: grade has no score")
 
-// Evaluator generates datasets and grades prompt outputs using a Completer.
+// Evaluator generates datasets and grades prompt outputs using a Grader.
 type Evaluator struct {
-	c             Completer
+	c             Grader
 	maxConcurrent int
 	out           io.Writer
 }
@@ -65,7 +65,7 @@ func WithOutput(w io.Writer) Option {
 }
 
 // New returns an Evaluator that calls c.
-func New(c Completer, opts ...Option) *Evaluator {
+func New(c Grader, opts ...Option) *Evaluator {
 	e := &Evaluator{c: c, maxConcurrent: defaultConcurrency, out: os.Stdout}
 	for _, opt := range opts {
 		opt(e)
@@ -75,7 +75,7 @@ func New(c Completer, opts ...Option) *Evaluator {
 
 // GenerateUniqueIdeas asks the model for numCases distinct test scenarios.
 func (e *Evaluator) GenerateUniqueIdeas(ctx context.Context, task string, numCases int) ([]string, error) {
-	text, err := e.c.Complete(ctx, Request{
+	text, err := e.c.Grade(ctx, Request{
 		System:        ideasSystemPrompt,
 		Prompt:        ideasPrompt(task, numCases),
 		Prefill:       jsonPrefill,
@@ -94,7 +94,7 @@ func (e *Evaluator) GenerateUniqueIdeas(ctx context.Context, task string, numCas
 
 // GenerateTestCase expands a single idea into a full test case.
 func (e *Evaluator) GenerateTestCase(ctx context.Context, task, idea string, spec map[string]string) (TestCase, error) {
-	text, err := e.c.Complete(ctx, Request{
+	text, err := e.c.Grade(ctx, Request{
 		System:        testCaseSystemPrompt,
 		Prompt:        testCasePrompt(task, idea, spec),
 		Prefill:       jsonPrefill,
@@ -161,7 +161,7 @@ type grade struct {
 // GradeOutput has the model score output against tc's criteria, plus any
 // mandatory extraCriteria (violating one caps the score at 3).
 func (e *Evaluator) GradeOutput(ctx context.Context, tc TestCase, output, extraCriteria string) (score float64, reasoning string, err error) {
-	text, err := e.c.Complete(ctx, Request{
+	text, err := e.c.Grade(ctx, Request{
 		Prompt:        gradePrompt(tc, output, extraCriteria),
 		Prefill:       jsonPrefill,
 		Temperature:   gradeTemperature,

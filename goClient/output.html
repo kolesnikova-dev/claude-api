@@ -117,7 +117,7 @@
                 </div>
                 <div class="stat-box">
                     <div>Average Score</div>
-                    <div class="stat-value">7.3 / 10</div>
+                    <div class="stat-value">7.7 / 10</div>
                 </div>
                 <div class="stat-box">
                     <div>Pass Rate (≥7)</div>
@@ -140,46 +140,319 @@
             <tbody>
     
             <tr>
-                <td>Testing with a breaking news article about a natural disaster involving multiple locations and casualty counts to verify the prompt can distill complex, multi-faceted events into a single coherent sentence</td>
-                <td class="prompt-inputs"><strong>article:</strong> A devastating 7.8 magnitude earthquake struck the coastal region early Tuesday morning, with tremors felt across three neighboring countries. The epicenter, located 40 kilometers offshore, triggered a tsunami that impacted multiple coastal cities. Preliminary reports indicate at least 2,847 deaths in the primary affected nation, with an additional 1,204 casualties across neighboring regions. Over 15,000 people are missing and feared dead as rescue operations continue in collapsed urban centers. The earthquake also triggered multiple landslides in mountainous areas, cutting off access to several remote villages. Hospitals are overwhelmed with over 8,500 injured patients. International aid organizations have mobilized emergency response teams, and neighboring countries have pledged humanitarian assistance. Authorities estimate the total economic damage could exceed $12 billion, making this one of the most destructive natural disasters in the region's recorded history.</td>
-                <td class="criteria">• Summary is a single sentence<br>• Captures the core event (earthquake/tsunami) and its major impact (casualties/scale)<br>• Mentions multiple affected locations or the multi-faceted nature of the disaster<br>• Remains coherent and grammatically correct</td>
-                <td class="output"><pre>A 7.8 magnitude earthquake and tsunami devastated a coastal region across three countries, killing thousands, injuring thousands more, and causing an estimated $12 billion in damage.</pre></td>
-                <td class="score-col"><span class="score score-high">9</span></td>
-                <td class="reasoning">The solution meets all four listed criteria: it is a single sentence, captures the core earthquake/tsunami event with major impacts, mentions multiple affected locations (three countries), and is coherent and grammatically correct. While the summary could be more specific with casualty numbers and could better represent the multi-faceted nature by including additional disaster consequences, the criteria do not require maximum specificity or comprehensive coverage—only that the summary 'mentions' multiple locations or multi-faceted nature, which it does. The solution successfully distills the essential information into a concise summary without violating any mandatory requirements.</td>
+                <td>Testing with a high-intensity endurance athlete (marathon runner) requiring elevated calorie and carbohydrate intake with specific timing around training windows</td>
+                <td class="prompt-inputs"><strong>goal:</strong> Complete a 20km marathon training run with high intensity intervals<br><strong>height:</strong> 178<br><strong>restrictions:</strong> Vegetarian, no nuts<br><strong>weight:</strong> 72</td>
+                <td class="criteria">• Meal plan contains 3-4 meals totaling 3000-3500 calories appropriate for a 72kg endurance athlete<br>• Includes carbohydrate-rich meals timed before and after the training run to optimize performance and recovery<br>• All meals respect vegetarian and nut-free dietary restrictions<br>• Plan is presented in a compact, single-day format with clear meal timing</td>
+                <td class="output"><pre># Nutrition Plan for Marathon Training
+
+## Daily Calorie Target: 2,600 calories
+
+**Macronutrient Breakdown:**
+- Protein: 130g (20%)
+- Carbohydrates: 390g (60%)
+- Fat: 87g (30%)
+
+---
+
+## Daily Meal Schedule
+
+### **Breakfast (7:00 AM)** — 550 calories
+- Oatmeal: 80g dry
+- Banana: 150g
+- Greek yogurt: 150g (0% fat)
+- Honey: 20g
+- Whole grain bread: 50g with 10g peanut butter alternative (tahini)
+
+*Macros: 18g protein | 90g carbs | 8g fat*
+
+---
+
+### **Mid-Morning Snack (10:00 AM)** — 250 calories
+- Smoothie bowl:
+  - Soy milk: 250ml
+  - Berries (frozen): 100g
+  - Rice protein powder: 25g
+  - Granola (nut-free): 30g
+
+*Macros: 12g protein | 35g carbs | 6g fat*
+
+---
+
+### **Lunch (1:00 PM)** — 650 calories
+- Brown rice: 150g cooked
+- Lentil curry: 200g cooked (use canned lentils)
+- Chickpeas: 100g
+- Olive oil: 15ml for cooking
+- Spinach: 50g
+- Tomato: 100g
+
+*Macros: 22g protein | 85g carbs | 18g fat*
+
+---
+
+### **Pre-Run Snack (3:30 PM)** — 300 calories
+*Consume 60-90 minutes before training*
+- White bagel: 85g
+- Jam: 30g
+- Banana: 120g
+
+*Macros: 8g protein | 65g carbs | 1g fat*
+
+---
+
+### **Post-Run Recovery (Within 30 minutes)** — 400 calories
+- Chocolate milk (plant-based): 500ml
+- Rice cakes: 50g
+- Pumpkin seeds: 20g (nut alternative)
+
+*Macros: 15g protein | 55g carbs | 12g fat*
+
+---
+
+### **Dinner (7:00 PM)** — 450 calories
+- Pasta (whole wheat): 120g cooked
+- Tofu: 150g (firm, pan-fried)
+- Broccoli: 150g
+- Bell pepper: 100g
+- Olive oil: 10ml
+- Garlic and herbs for seasoning
+
+*Macros: 20g protein | 45g carbs | 15g fat*
+
+---
+
+### **Evening Snack (9:00 PM)** — 150 calories
+- Greek yogurt: 200g (0% fat)
+- Granola (nut-free): 20g
+- Blueberries: 50g
+
+*Macros: 17g protein | 15g carbs | 1g fat*
+
+---
+
+## Hydration
+- 3-4 liters of water daily
+- During intense intervals: electrolyte drink (200ml every 20 minutes)
+
+## Key Notes
+✓ High carbs fuel endurance training  
+✓ Protein spread throughout day for recovery  
+✓ Pre-run snack provides quick energy  
+✓ Post-run nutrition aids muscle repair  
+✓ All foods vegetarian and nut-free</pre></td>
+                <td class="score-col"><span class="score score-low">5</span></td>
+                <td class="reasoning">The solution meets all three mandatory requirements with clear presentation of daily totals, macronutrient breakdown, and detailed meals with portions and timing. However, it has a critical deficiency in the secondary criteria: the 2,600-calorie total is significantly below the 3,000-3,500 calorie requirement for a 72kg athlete performing a 20km high-intensity training run. This represents a substantial nutritional shortfall that would compromise performance and recovery. The meal timing and dietary restriction compliance are excellent, but the caloric deficit is a material failure against stated criteria.</td>
             </tr>
         
             <tr>
-                <td>Testing with a lengthy political opinion piece or editorial containing multiple arguments and counterarguments to assess whether the prompt captures the main thesis rather than getting lost in nuance</td>
-                <td class="prompt-inputs"><strong>article:</strong> The proposed infrastructure bill represents a critical juncture for American economic policy, yet its merits remain hotly contested. Proponents argue that the $2 trillion investment will modernize aging roads and bridges, create millions of jobs, and position the nation competitively against China's infrastructure spending. They contend that long-term economic growth will offset short-term deficit concerns. Conversely, fiscal conservatives warn that the spending is reckless and inflationary, pointing to existing debt levels and arguing that private markets could deliver infrastructure more efficiently. Some economists counter that current interest rates make government borrowing cheap and that infrastructure investment generates returns exceeding costs. Environmental advocates praise provisions for electric vehicle charging networks and renewable energy, while others question whether the allocations adequately address climate goals. Labor unions support job creation but worry provisions don't guarantee prevailing wages. Business groups remain divided: some welcome infrastructure improvements while others oppose tax increases to fund it. Meanwhile, state and local officials broadly support federal investment to address their deferred maintenance backlogs. The bill ultimately reflects competing visions about government's role in the economy, the urgency of infrastructure renewal, and how to balance growth with fiscal responsibility—questions that will shape American policy for decades.</td>
-                <td class="criteria">• Identifies the central thesis or main point about the infrastructure bill despite multiple competing arguments presented<br>• Avoids being derailed by secondary debates about inflation, efficiency, or environmental details<br>• Captures the substance in a single, coherent sentence</td>
-                <td class="output"><pre># Summary
+                <td>Testing with a strength/power athlete (weightlifter) with dietary restrictions (vegetarian) requiring balanced macronutrients and meal timing around gym sessions</td>
+                <td class="prompt-inputs"><strong>goal:</strong> Build muscle and increase strength through weightlifting<br><strong>height:</strong> 178<br><strong>restrictions:</strong> Vegetarian<br><strong>weight:</strong> 82</td>
+                <td class="criteria">• Meal plan covers one full day with at least 4 meals/snacks<br>• Includes pre- and post-workout nutrition timed around gym session<br>• All foods are vegetarian with no meat, poultry, or fish<br>• Provides balanced macronutrients supporting muscle building (approximately 1.6-2.2g protein per kg bodyweight)</td>
+                <td class="output"><pre># Muscle-Building Nutrition Plan for Vegetarian Weightlifter
 
-The proposed $2 trillion infrastructure bill reflects deep disagreements over whether federal spending will effectively modernize America's infrastructure and boost the economy or recklessly increase debt and inflation.</pre></td>
+## Daily Calorie & Macronutrient Targets
+- **Daily Calories:** 2,800-3,000 kcal
+- **Protein:** 165g (2.0g per kg bodyweight)
+- **Carbohydrates:** 375-400g
+- **Fat:** 78-90g
+
+---
+
+## Daily Meal Plan
+
+### **BREAKFAST (7:00 AM)** — 650 kcal
+- Oatmeal: 80g dry
+- Whole milk: 250ml
+- Banana: 120g
+- Almond butter: 20g
+- Honey: 15g
+
+*Protein: 18g | Carbs: 85g | Fat: 18g*
+
+---
+
+### **SNACK 1 (10:00 AM)** — 280 kcal
+- Greek yogurt (plain): 200g
+- Granola: 40g
+- Mixed berries: 80g
+
+*Protein: 20g | Carbs: 32g | Fat: 5g*
+
+---
+
+### **LUNCH (1:00 PM)** — 700 kcal
+- Brown rice: 150g cooked
+- Lentils: 120g cooked
+- Paneer cheese: 100g
+- Bell pepper: 100g
+- Olive oil: 15ml
+- Salt & spices
+
+*Protein: 28g | Carbs: 72g | Fat: 18g*
+
+---
+
+### **PRE-WORKOUT (3:30 PM)** — 320 kcal
+- White rice cakes: 50g
+- Peanut butter: 25g
+- Apple: 180g
+
+*Protein: 10g | Carbs: 50g | Fat: 9g*
+
+---
+
+### **POST-WORKOUT (5:30 PM)** — 400 kcal
+- Whey protein powder: 40g
+- Banana: 120g
+- Whole milk: 200ml
+- Maltodextrin: 20g
+
+*Protein: 35g | Carbs: 60g | Fat: 3g*
+
+---
+
+### **DINNER (7:30 PM)** — 550 kcal
+- Chickpeas: 150g cooked
+- Quinoa: 100g cooked
+- Spinach: 100g
+- Tomatoes: 100g
+- Olive oil: 12ml
+- Feta cheese: 50g
+
+*Protein: 20g | Carbs: 65g | Fat: 15g*
+
+---
+
+### **EVENING SNACK (9:30 PM)** — 200 kcal
+- Cottage cheese: 150g
+- Almonds: 25g
+
+*Protein: 24g | Carbs: 8g | Fat: 12g*
+
+---
+
+## **Daily Totals**
+- **Calories:** 3,100
+- **Protein:** 155g ✓
+- **Carbohydrates:** 372g ✓
+- **Fat:** 80g ✓
+
+---
+
+## Key Tips
+✓ Drink 3-4 liters of water daily  
+✓ Time carbs around workouts for energy  
+✓ Adjust portions if weight doesn't increase in 2-3 weeks  
+✓ All foods are budget-friendly staples</pre></td>
                 <td class="score-col"><span class="score score-high">9</span></td>
-                <td class="reasoning">The solution meets all three mandatory criteria effectively. It identifies the central thesis (deep disagreement over the bill's merits), avoids being derailed by secondary details (doesn't get bogged down in environmental provisions, wage guarantees, or state-level concerns), and presents the substance in a single coherent sentence. The summary accurately captures the fundamental tension between growth/modernization advocates and fiscal conservatives. While the solution could have been marginally more comprehensive by explicitly referencing the ideological dimension about government's economic role, this omission is minor and doesn't undermine the core summary. The sentence is clear, well-structured, and appropriately captures what the article is fundamentally about.</td>
+                <td class="reasoning">The solution comprehensively addresses all mandatory requirements with precision. It provides a full day of meals (7 occasions), includes pre- and post-workout nutrition with reasonable timing, maintains strict vegetarianism across all foods, and delivers protein at 1.89g/kg bodyweight—solidly within the 1.6-2.2g/kg target. Macronutrient distribution supports muscle building with appropriate carbohydrate timing around workouts. The only minor concern is the implicit assumption about workout timing and the use of whey protein, which while vegetarian, could have been more explicitly justified or substituted with plant-based options. These are minor issues that don't violate the stated criteria.</td>
             </tr>
         
             <tr>
-                <td>Testing with a technology product launch announcement containing specifications, pricing, availability dates, and competitive positioning to verify the prompt prioritizes the core news over supporting details</td>
-                <td class="prompt-inputs"><strong>article:</strong> TechCorp Unveils Next-Generation SmartDevice Pro with Revolutionary Features
+                <td>Testing with a sport-specific athlete (swimmer) recovering from injury, needing anti-inflammatory foods and modified portions while maintaining performance nutrition</td>
+                <td class="prompt-inputs"><strong>goal:</strong> Post-injury recovery with anti-inflammatory nutrition while maintaining swimming performance<br><strong>height:</strong> 178<br><strong>restrictions:</strong> No shellfish (allergy), prefer whole foods<br><strong>weight:</strong> 72</td>
+                <td class="criteria">• Includes 4-5 meals/snacks with anti-inflammatory foods (e.g., fatty fish, berries, leafy greens, turmeric)<br>• Meal plan is compact and fits on one page or concise format<br>• Portions are appropriate for 72kg athlete with modified intensity due to injury recovery<br>• Maintains adequate protein intake for muscle recovery and athletic performance</td>
+                <td class="output"><pre># Post-Injury Recovery Nutrition Plan for Swimmer
 
-SAN FRANCISCO — TechCorp announced today the launch of its highly anticipated SmartDevice Pro, featuring a revolutionary 3nm processor, 16GB unified memory, and an advanced AI-powered camera system with 200MP resolution. The device will be available in three color options: Midnight Black, Silver, and Rose Gold.
+## Daily Calorie & Macronutrient Target
+- **Daily Calories:** 2,600 kcal
+- **Protein:** 140g (22%)
+- **Carbohydrates:** 325g (50%)
+- **Fat:** 87g (30%)
 
-Pricing starts at $1,299 for the base model with 256GB storage, $1,499 for 512GB, and $1,699 for the 1TB variant. Pre-orders begin November 15th, with general availability on December 1st in North America, Europe, and Asia-Pacific regions.
+*Rationale: Maintains swimming performance while supporting anti-inflammatory recovery*
 
-The SmartDevice Pro significantly outperforms competitors' flagship models, offering 40% faster processing speeds than the leading rival device and 25% better battery efficiency. The new thermal management system keeps the device 15 degrees cooler during intensive tasks.
+---
 
-TechCorp CEO Sarah Chen stated: 'This represents a leap forward in personal technology. We've invested three years and over $500 million in R&D to create something truly transformative.'
+## Daily Meal Plan
 
-The device includes a 6.8-inch OLED display with 120Hz refresh rate, supports 5G connectivity, and features a redesigned user interface with gesture controls. Accessories will be sold separately, with protective cases starting at $49 and wireless chargers at $79.
+### **BREAKFAST (7:00 AM)** — 550 kcal
+- Oatmeal: 60g dry
+- Blueberries: 100g
+- Whole milk: 240ml
+- Honey: 15g
+- Almonds: 20g
 
-TechCorp expects to sell 5 million units in the first quarter, positioning itself to capture 18% market share by year-end.</td>
-                <td class="criteria">• Summary captures the core announcement (SmartDevice Pro launch) in a single sentence<br>• Summary prioritizes the main news event over specifications, pricing, availability dates, and competitive details<br>• Summary is concise and self-contained without requiring reference to supporting details</td>
-                <td class="output"><pre># Summary
+**Macros:** 18g protein | 75g carbs | 18g fat
 
-TechCorp launched the SmartDevice Pro, a high-performance device with a 3nm processor, 16GB memory, and 200MP AI camera, priced from $1,299, available for pre-order November 15th with general availability December 1st.</pre></td>
-                <td class="score-col"><span class="score score-low">4</span></td>
-                <td class="reasoning">The solution successfully meets the first criterion by capturing the core announcement in one sentence. However, it significantly violates the second criterion, which explicitly states the summary should 'prioritize the main news event over specifications, pricing, availability dates, and competitive details.' The solution does the opposite—it prioritizes specifications, pricing, and availability dates over the main news event. A stronger summary would focus on the launch announcement itself (e.g., 'TechCorp unveiled its new SmartDevice Pro flagship device') with minimal supporting details. The current solution reads more like a product specification summary than a news summary.</td>
+---
+
+### **MID-MORNING SNACK (10:00 AM)** — 250 kcal
+- Greek yogurt (plain): 150g
+- Banana: 120g
+- Walnuts: 15g
+
+**Macros:** 15g protein | 32g carbs | 10g fat
+
+---
+
+### **LUNCH (1:00 PM)** — 650 kcal
+- Grilled salmon fillet: 150g
+- Brown rice: 150g cooked
+- Spinach (sautéed in olive oil): 100g
+- Olive oil: 10ml
+
+**Macros:** 35g protein | 70g carbs | 28g fat
+
+---
+
+### **PRE-SWIM SNACK (3:30 PM)** — 300 kcal
+- White rice cakes: 50g
+- Almond butter: 20g
+- Apple: 150g
+
+**Macros:** 8g protein | 48g carbs | 10g fat
+
+---
+
+### **DINNER (7:00 PM)** — 650 kcal
+- Lean ground turkey: 160g
+- Sweet potato: 200g baked
+- Broccoli: 150g
+- Olive oil: 10ml
+- Garlic & herbs
+
+**Macros:** 50g protein | 75g carbs | 18g fat
+
+---
+
+### **EVENING SNACK (9:00 PM)** — 200 kcal
+- Cottage cheese (low-fat): 150g
+- Berries (mixed): 80g
+- Flaxseeds: 10g
+
+**Macros:** 28g protein | 15g carbs | 5g fat
+
+---
+
+## Anti-Inflammatory Focus
+
+**Key Foods Included:**
+- **Omega-3 sources:** Salmon, walnuts, flaxseeds
+- **Antioxidants:** Blueberries, spinach, broccoli
+- **Turmeric:** Add 1/4 tsp to rice or vegetables daily
+
+**Foods to Minimize:**
+- Processed foods
+- Excess sugar
+- Vegetable oils high in omega-6
+
+---
+
+## Hydration
+- 3-4 liters water daily
+- Add electrolyte drink during/after swim sessions
+
+---
+
+## Notes
+✓ All foods are whole, non-processed  
+✓ No shellfish  
+✓ Budget-friendly protein sources (turkey, eggs possible addition)  
+✓ Carb timing supports swimming performance  
+✓ Anti-inflammatory nutrients prioritized throughout</pre></td>
+                <td class="score-col"><span class="score score-high">9</span></td>
+                <td class="reasoning">The solution comprehensively satisfies all mandatory requirements with clear presentation of daily calories, detailed macronutrient percentages, and six meals with specific portions and timing. It successfully addresses the secondary criteria by including 6 anti-inflammatory meals (exceeding the 4-5 requirement), maintaining compact one-page format, providing appropriate portions for a 72kg athlete, and ensuring adequate protein (140g) for recovery. The plan respects all input constraints (shellfish allergy, whole foods preference) and includes thoughtful additions like hydration guidance and anti-inflammatory focus. Minor weaknesses exist in caloric justification for injury recovery context and implementation clarity for some recommendations, but these do not violate core requirements.</td>
             </tr>
         
             </tbody>
