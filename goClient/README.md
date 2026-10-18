@@ -2,6 +2,7 @@
 - internal/chat/service.go has Service, the options (WithModel, WithMaxTokens, WithSystemPrompt, WithMaxHistory), AddUserMessage, AddAssistantMessage and Chat(ctx, text).
 - internal/chat/messenger.go defines the small interface the service depends on. The SDK's client.Messages satisfies it, so tests can fake it.
 - internal/chat/errors.go has the sentinel errors: ErrEmptyMessage, ErrInvalidOrder, ErrNoTextContent and ErrBusy.
+- internal/evaluator contains a PromptEvaluator. Evaluator (New, WithMaxConcurrency, WithOutput) has GenerateDataset and RunEvaluation, plus the per-step methods. GenerateReport builds the HTML report. Completer is a small stateless model-call interface (system, prefill, temperature, stop sequences), and NewAnthropicCompleter backs it with client.Messages.
 
 
 *To Review*

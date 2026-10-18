@@ -1,0 +1,54 @@
+[
+  {
+    "output": "A 7.8 magnitude earthquake and tsunami devastated a coastal region across three countries, killing thousands, injuring thousands more, and causing an estimated $12 billion in damage.",
+    "test_case": {
+      "prompt_inputs": {
+        "article": "A devastating 7.8 magnitude earthquake struck the coastal region early Tuesday morning, with tremors felt across three neighboring countries. The epicenter, located 40 kilometers offshore, triggered a tsunami that impacted multiple coastal cities. Preliminary reports indicate at least 2,847 deaths in the primary affected nation, with an additional 1,204 casualties across neighboring regions. Over 15,000 people are missing and feared dead as rescue operations continue in collapsed urban centers. The earthquake also triggered multiple landslides in mountainous areas, cutting off access to several remote villages. Hospitals are overwhelmed with over 8,500 injured patients. International aid organizations have mobilized emergency response teams, and neighboring countries have pledged humanitarian assistance. Authorities estimate the total economic damage could exceed $12 billion, making this one of the most destructive natural disasters in the region's recorded history."
+      },
+      "solution_criteria": [
+        "Summary is a single sentence",
+        "Captures the core event (earthquake/tsunami) and its major impact (casualties/scale)",
+        "Mentions multiple affected locations or the multi-faceted nature of the disaster",
+        "Remains coherent and grammatically correct"
+      ],
+      "task_description": "Summarize a news article in one sentence",
+      "scenario": "Testing with a breaking news article about a natural disaster involving multiple locations and casualty counts to verify the prompt can distill complex, multi-faceted events into a single coherent sentence"
+    },
+    "score": 9,
+    "reasoning": "The solution meets all four listed criteria: it is a single sentence, captures the core earthquake/tsunami event with major impacts, mentions multiple affected locations (three countries), and is coherent and grammatically correct. While the summary could be more specific with casualty numbers and could better represent the multi-faceted nature by including additional disaster consequences, the criteria do not require maximum specificity or comprehensive coverage—only that the summary 'mentions' multiple locations or multi-faceted nature, which it does. The solution successfully distills the essential information into a concise summary without violating any mandatory requirements."
+  },
+  {
+    "output": "# Summary\n\nThe proposed $2 trillion infrastructure bill reflects deep disagreements over whether federal spending will effectively modernize America's infrastructure and boost the economy or recklessly increase debt and inflation.",
+    "test_case": {
+      "prompt_inputs": {
+        "article": "The proposed infrastructure bill represents a critical juncture for American economic policy, yet its merits remain hotly contested. Proponents argue that the $2 trillion investment will modernize aging roads and bridges, create millions of jobs, and position the nation competitively against China's infrastructure spending. They contend that long-term economic growth will offset short-term deficit concerns. Conversely, fiscal conservatives warn that the spending is reckless and inflationary, pointing to existing debt levels and arguing that private markets could deliver infrastructure more efficiently. Some economists counter that current interest rates make government borrowing cheap and that infrastructure investment generates returns exceeding costs. Environmental advocates praise provisions for electric vehicle charging networks and renewable energy, while others question whether the allocations adequately address climate goals. Labor unions support job creation but worry provisions don't guarantee prevailing wages. Business groups remain divided: some welcome infrastructure improvements while others oppose tax increases to fund it. Meanwhile, state and local officials broadly support federal investment to address their deferred maintenance backlogs. The bill ultimately reflects competing visions about government's role in the economy, the urgency of infrastructure renewal, and how to balance growth with fiscal responsibility—questions that will shape American policy for decades."
+      },
+      "solution_criteria": [
+        "Identifies the central thesis or main point about the infrastructure bill despite multiple competing arguments presented",
+        "Avoids being derailed by secondary debates about inflation, efficiency, or environmental details",
+        "Captures the substance in a single, coherent sentence"
+      ],
+      "task_description": "Summarize a news article in one sentence",
+      "scenario": "Testing with a lengthy political opinion piece or editorial containing multiple arguments and counterarguments to assess whether the prompt captures the main thesis rather than getting lost in nuance"
+    },
+    "score": 9,
+    "reasoning": "The solution meets all three mandatory criteria effectively. It identifies the central thesis (deep disagreement over the bill's merits), avoids being derailed by secondary details (doesn't get bogged down in environmental provisions, wage guarantees, or state-level concerns), and presents the substance in a single coherent sentence. The summary accurately captures the fundamental tension between growth/modernization advocates and fiscal conservatives. While the solution could have been marginally more comprehensive by explicitly referencing the ideological dimension about government's economic role, this omission is minor and doesn't undermine the core summary. The sentence is clear, well-structured, and appropriately captures what the article is fundamentally about."
+  },
+  {
+    "output": "# Summary\n\nTechCorp launched the SmartDevice Pro, a high-performance device with a 3nm processor, 16GB memory, and 200MP AI camera, priced from $1,299, available for pre-order November 15th with general availability December 1st.",
+    "test_case": {
+      "prompt_inputs": {
+        "article": "TechCorp Unveils Next-Generation SmartDevice Pro with Revolutionary Features\n\nSAN FRANCISCO — TechCorp announced today the launch of its highly anticipated SmartDevice Pro, featuring a revolutionary 3nm processor, 16GB unified memory, and an advanced AI-powered camera system with 200MP resolution. The device will be available in three color options: Midnight Black, Silver, and Rose Gold.\n\nPricing starts at $1,299 for the base model with 256GB storage, $1,499 for 512GB, and $1,699 for the 1TB variant. Pre-orders begin November 15th, with general availability on December 1st in North America, Europe, and Asia-Pacific regions.\n\nThe SmartDevice Pro significantly outperforms competitors' flagship models, offering 40% faster processing speeds than the leading rival device and 25% better battery efficiency. The new thermal management system keeps the device 15 degrees cooler during intensive tasks.\n\nTechCorp CEO Sarah Chen stated: 'This represents a leap forward in personal technology. We've invested three years and over $500 million in R&D to create something truly transformative.'\n\nThe device includes a 6.8-inch OLED display with 120Hz refresh rate, supports 5G connectivity, and features a redesigned user interface with gesture controls. Accessories will be sold separately, with protective cases starting at $49 and wireless chargers at $79.\n\nTechCorp expects to sell 5 million units in the first quarter, positioning itself to capture 18% market share by year-end."
+      },
+      "solution_criteria": [
+        "Summary captures the core announcement (SmartDevice Pro launch) in a single sentence",
+        "Summary prioritizes the main news event over specifications, pricing, availability dates, and competitive details",
+        "Summary is concise and self-contained without requiring reference to supporting details"
+      ],
+      "task_description": "Summarize a news article in one sentence",
+      "scenario": "Testing with a technology product launch announcement containing specifications, pricing, availability dates, and competitive positioning to verify the prompt prioritizes the core news over supporting details"
+    },
+    "score": 4,
+    "reasoning": "The solution successfully meets the first criterion by capturing the core announcement in one sentence. However, it significantly violates the second criterion, which explicitly states the summary should 'prioritize the main news event over specifications, pricing, availability dates, and competitive details.' The solution does the opposite—it prioritizes specifications, pricing, and availability dates over the main news event. A stronger summary would focus on the launch announcement itself (e.g., 'TechCorp unveiled its new SmartDevice Pro flagship device') with minimal supporting details. The current solution reads more like a product specification summary than a news summary."
+  }
+]
